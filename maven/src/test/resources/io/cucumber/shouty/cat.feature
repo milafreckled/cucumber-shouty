@@ -1,0 +1,4 @@
+# language: en-lol
+  OH HAI: HEAR SHOUT
+    MISHUN: MESAGE IZ 2 LONG
+      I CAN HAZ A KAT CALLD SHOUTR

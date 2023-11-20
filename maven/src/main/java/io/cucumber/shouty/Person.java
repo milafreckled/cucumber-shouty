@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Person {
-    public int getLocation() {
-        return location;
-    }
 
     private int location;
-    public static List<String> messages = new ArrayList<String>();
+    public List<String> messages = new ArrayList<String>();
     private Network network;
 
     public Person(Network network) {
@@ -18,7 +15,9 @@ public class Person {
         this.network = network;
         this.location = location;
     }
-
+    public int getLocation() {
+        return location;
+    }
     public void hear(String message){
         messages.add(message);
     }
@@ -26,8 +25,7 @@ public class Person {
             network.broadcast(message, getLocation());
     }
     public List<String> getMessagesHeard(){
-//        List<String> result = new ArrayList<String>();
-//        result.add("free bagels at Sean's");
+        System.out.println("Messages heard: " + messages.toString());
         return messages;
     }
 }
