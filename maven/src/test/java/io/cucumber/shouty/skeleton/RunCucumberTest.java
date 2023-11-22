@@ -1,7 +1,6 @@
 package io.cucumber.shouty.skeleton;
 //import cucumber.api.testng.AbstractTestNGCucumberTests;
-
-import io.cucumber.junit.platform.engine.*;
+import io.cucumber.junit.platform.engine.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.platform.suite.api.ConfigurationParameter;
 import org.junit.platform.suite.api.IncludeEngines;
