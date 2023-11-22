@@ -46,7 +46,7 @@ Feature: Hear shout
         | location | 0    | 50   |
       When Sean shouts the following message
       """
-      This is veery long message,
+      This is veeery long message,
       so long that I will not be allowed to send it,
       unless it does not exceed 180 characters size
       """

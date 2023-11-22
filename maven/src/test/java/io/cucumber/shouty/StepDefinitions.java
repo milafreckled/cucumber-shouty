@@ -20,6 +20,10 @@ public class StepDefinitions {
     private Network network = new Network(DEFAULT_RANGE);
     private HashMap<String, Person> people;
 
+    @Given("Sean has bought {int} credits")
+    public void seanHasBoughtCredits(int arg0) {
+    }
+
 
     static class Whereabouts{
         public String name;
@@ -71,6 +75,29 @@ public class StepDefinitions {
     @When("Sean shouts the following message")
     public void seanShoutsTheFollowingMessage(String message) {
         people.get("Sean").shout(message);
+    }
+    @When("Sean shouts {int} long messages")
+    public void sean_shouts_some_long_messages(int messages) throws Throwable {
+        String longMessage = String.join("\n", "This is a long message,", "that is not exceeding 180 characters limit");
+        for (int i = 0; i<messages; i++) {
+            people.get("Sean").shout(longMessage);
+        }
+    }
+    @And("Sean shouts {int} messages containing word {string}")
+    public void seanShoutsMessagesContainingWord(int messages, String word) {
+        for (int i = 0; i<messages; i++) {
+            people.get("Sean").shout("Some message"+word);
+        }
+    }
+
+    @When("Sean shouts {int} over-long messages")
+    public void sean_shouts_some_over_long_messages(int messages) throws Throwable{
+        String baseMessage = "A message from Sean that is 181 characters long";
+        String padding = "x";
+        String overLongMessage = baseMessage + padding.repeat(181 - baseMessage.length());
+        for (int i = 0; i<messages; i++) {
+            people.get("Sean").shout(overLongMessage);
+        }
     }
     @Then("Lucy should hear a shout")
     public void lucyShouldHearAShout() {
