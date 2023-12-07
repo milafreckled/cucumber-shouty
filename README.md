@@ -1,27 +1,8 @@
-# Cucumber-Java Skeleton
+# Cucumber Shouty App
 
-This is the simplest possible build script setup for Cucumber using Java.
-There is nothing fancy like a webapp or browser testing. All this does is to show
-you how to install and run Cucumber!
-
-There is a single feature file with one scenario. The scenario has three steps,
-two of them pending. See if you can make them all pass!
-
-## Get the code
-
-Git:
-
-    git clone https://github.com/cucumber/cucumber-java-skeleton.git
-    cd cucumber-java-skeleton
-
-Subversion:
-
-    svn checkout https://github.com/cucumber/cucumber-java-skeleton/trunk cucumber-java-skeleton
-    cd cucumber-java-skeleton
-
-Or [download a zip](https://github.com/cucumber/cucumber-java-skeleton/archive/main.zip) file.
-
-## Use Maven
+This code covers rules and scenarios for Shouty application - which is basically marketing app for "shouting", where business owner can "shout" their messages and people within range can hear it. 
+This Java Test Suite consists of few feature files, corresponding step definitions, test runner class and helper classes.
+## Run with Maven
 
 Open a command window and run:
 
@@ -31,7 +12,7 @@ Open a command window and run:
 This runs Cucumber features using Cucumber's JUnit Platform Engine. The `Suite`
 annotation on the `RunCucumberTest` class tells JUnit to kick off Cucumber.
 
-## Use Gradle
+## RUn with Gradle
 
 Open a command window and run:
 
@@ -54,11 +35,11 @@ For available parameters see: `io.cucumber.junit.platform.engine.Constants`
 
 Specify a particular scenario by *line*
 
-    @SelectClasspathResource(value = "io/cucumber/skeleton/belly.feature", line = 3)
+    @SelectClasspathResource(value = "io/cucumber/skeleton/shouty.feature", line = 23)
 
 In case you have multiple feature files or scenarios to run against repeat the
 annotation.
 
 You can also specify what to run by *tag*:
 
-    @IncludeTags("zucchini")
+    @IncludeTags("todo")
