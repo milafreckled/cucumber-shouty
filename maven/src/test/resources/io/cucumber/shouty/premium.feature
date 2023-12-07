@@ -15,5 +15,13 @@ Feature: Premium account
     When Sean shouts 3 long messages
     And Sean shouts 2 over-long messages
     And Sean shouts 2 messages containing word "buy"
-    Then Lucy hears all Sean's messages
+    Then Lucy should hear 7 messages
     And Sean should have 11 credits
+
+  @todo
+  Scenario: Shouting a message with wod "buy" takes 5 credits
+#   arbitrary value, e.g. bug id
+    BUG #2789
+    Given Sean has bought 100 credits
+    When Sean shouts "Buy, buy, buy me delicious coffee!"
+    Then Sean should have 95 credits

@@ -1,6 +1,6 @@
 package io.cucumber.shouty.skeleton;
 //import cucumber.api.testng.AbstractTestNGCucumberTests;
-import io.cucumber.junit.platform.engine.Cucumber;
+import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.platform.suite.api.ConfigurationParameter;
 import org.junit.platform.suite.api.IncludeEngines;
@@ -13,7 +13,7 @@ import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
 
 @Suite
 @RunWith(Cucumber.class)
-@CucumberOptions(tags = "not @slow", plugin = { "pretty"})
+@CucumberOptions(tags = "@todo", plugin = { "pretty"})
 @IncludeEngines("cucumber")
 @SelectClasspathResource("io/cucumber/shouty")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")

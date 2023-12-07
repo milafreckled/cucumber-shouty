@@ -40,7 +40,7 @@ public class NetworkTest {
     }
 
     private Person mock(Class<Person> personClass, int location) {
-        return new Person(network, location);
+        return new Person("Lucy", network, location);
     }
 
     private Object never() {

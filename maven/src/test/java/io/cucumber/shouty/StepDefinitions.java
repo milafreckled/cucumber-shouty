@@ -1,27 +1,36 @@
 package io.cucumber.shouty;
 
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.Before;
 import io.cucumber.java.DataTableType;
 import io.cucumber.java.Transpose;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.shouty.support.ShoutyWorld;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
 public class StepDefinitions {
-//    private Person lucy;
-//    private Person sean;
-    private static final int DEFAULT_RANGE = 100;
-    private Network network = new Network(DEFAULT_RANGE);
-    private HashMap<String, Person> people;
+    private final ShoutyWorld world;
+
+    public StepDefinitions(ShoutyWorld world){
+        this.world = world;
+    }
+
+//    private HashMap<String, Person> people;
 
     @Given("Sean has bought {int} credits")
     public void seanHasBoughtCredits(int arg0) {
+    }
+
+    @And("{person} should have {int} credits")
+    public void seanShouldHaveCredits(Person person) {
     }
 
 
@@ -38,18 +47,17 @@ public class StepDefinitions {
         return new Whereabouts(entry.get("name"), Integer.parseInt(entry.get("location")));
     }
 
-    @Before
-    public void createNetwork(){
-//        network = new Network(DEFAULT_RANGE));
-        people = new HashMap<String, Person>();
-    }
+//    @Before
+//    public void createNetwork(){
+//        people = new HashMap<String, Person>();
+//    }
 
     @Given("people are located at")
     public void people_are_located_at(@Transpose List<Whereabouts> dataTable) {
         for (Whereabouts personData : dataTable){
-            Person p = new Person(network, personData.location);
-            people.put(personData.name, p);
-            network.subscribe(p);
+            Person p = new Person(personData.name, world.network, personData.location);
+            world.people.put(personData.name, p);
+            world.network.subscribe(p);
         }
     }
 
@@ -59,59 +67,59 @@ public class StepDefinitions {
 //    }
     @Given("the range is {int}")
     public void theRangeIs(int range) {
-        network = new Network(range);
+        world.network = new Network(range);
     }
 
     @When("Sean shouts")
     public void seanShouts() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        people.get("Sean").shout("Hello friends!");
+        world.people.get("Sean").shout("Hello friends!");
     }
     @When("Sean shouts {string}")
     public void seanShouts(String message) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        people.get("Sean").shout(message);
+        world.people.get("Sean").shout(message);
     }
-    @When("Sean shouts the following message")
-    public void seanShoutsTheFollowingMessage(String message) {
-        people.get("Sean").shout(message);
+    @When("{person} shouts the following message")
+    public void seanShoutsTheFollowingMessage(Person person, String message) {
+        world.shout(person, message);
     }
-    @When("Sean shouts {int} long messages")
-    public void sean_shouts_some_long_messages(int messages) throws Throwable {
+    @When("{person} shouts {int} long messages")
+    public void sean_shouts_some_long_messages(Person person, int messages) throws Throwable {
         String longMessage = String.join("\n", "This is a long message,", "that is not exceeding 180 characters limit");
         for (int i = 0; i<messages; i++) {
-            people.get("Sean").shout(longMessage);
+            world.shout(person, longMessage);
         }
     }
-    @And("Sean shouts {int} messages containing word {string}")
-    public void seanShoutsMessagesContainingWord(int messages, String word) {
+    @And("{person} shouts {int} messages containing word {string}")
+    public void seanShoutsMessagesContainingWord(Person person, int messages, String word) {
         for (int i = 0; i<messages; i++) {
-            people.get("Sean").shout("Some message"+word);
+            world.shout(person,"Some message"+word);
         }
     }
 
-    @When("Sean shouts {int} over-long messages")
-    public void sean_shouts_some_over_long_messages(int messages) throws Throwable{
+    @When("{person} shouts {int} over-long messages")
+    public void sean_shouts_some_over_long_messages(Person person, int messages){
         String baseMessage = "A message from Sean that is 181 characters long";
         String padding = "x";
         String overLongMessage = baseMessage + padding.repeat(181 - baseMessage.length());
         for (int i = 0; i<messages; i++) {
-            people.get("Sean").shout(overLongMessage);
+            world.shout(person, overLongMessage);
         }
     }
     @Then("Lucy should hear a shout")
     public void lucyShouldHearAShout() {
-        assertEquals(1, people.get("Lucy").getMessagesHeard().size());
+        assertEquals(1, world.people.get("Lucy").getMessagesHeard().size());
     }
 
     @Then("{word} should not hear a shout")
     public void someoneShouldNotHearAShout(String name) {
-        assertEquals(0, people.get(name).getMessagesHeard().size());
+        assertEquals(0, world.people.get(name).getMessagesHeard().size());
     }
     @Then("Lucy should hear following shouts")
     public void lucyShouldHearFollowingShouts(io.cucumber.datatable.DataTable expectedMessages) {
         List<List<String>> actualMessages = new ArrayList<List<String>>();
-        List<String> heard = people.get("Lucy").getMessagesHeard();
+        List<String> heard = world.people.get("Lucy").getMessagesHeard();
         for (String message : heard){
             actualMessages.add(Collections.singletonList(message));
         }
@@ -120,8 +128,8 @@ public class StepDefinitions {
 
     @And("a person named {word}")
     public void aPersonNamedSean(String name) {
-        Person p= new Person(network, 0);
-        people.put(name, p);
-        network.subscribe(p);
+        Person p= new Person(name, world.network, 0);
+        world.people.put(name, p);
+        world.network.subscribe(p);
     }
 }
